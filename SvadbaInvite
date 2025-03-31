@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на свадьбу</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        .container { max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        input, select, button { width: 100%; padding: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Приглашение на свадьбу</h2>
+        <p><b>Дата:</b> 1 августа 2025</p>
+        <p><b>Время:</b> 15:00</p>
+        <p><b>Адрес:</b> Ресторан "Роза ветров", г. Оренбург, ул. Восточная, 15А</p>
+        <p><b>Контакты:</b><br>Жених: +7 901 084-39-62<br>Невеста: +7 901 890-88-85</p>
+        
+        <h3>Подтвердите участие</h3>
+        <form id="rsvpForm">
+            <input type="text" id="name" placeholder="Введите ФИО" required>
+            <select id="response" required>
+                <option value="">Выберите вариант</option>
+                <option value="Пойду">Пойду</option>
+                <option value="Не пойду">Не пойду</option>
+                <option value="Сомневаюсь">Сомневаюсь</option>
+            </select>
+            <button type="submit">Отправить</button>
+        </form>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        document.getElementById("rsvpForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const response = document.getElementById("response").value;
+            
+            fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ name, response })
+            })
+            .then(res => res.text())
+            .then(data => document.getElementById("status").innerText = "Ответ записан!")
+            .catch(err => document.getElementById("status").innerText = "Ошибка отправки!");
+        });
+    </script>
+</body>
+</html>
